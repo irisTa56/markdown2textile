@@ -1,7 +1,8 @@
 {
 	"name": "markdown2textile",
 	"displayName": "Markdown2Textile",
-	"description": "Convert Markdown to Textile",
+	"description": "VS Code extension to convert Markdown to Textile",
+	"license" : "MIT",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.35.0"

@@ -33,3 +33,4 @@ Not yet released...
 * [ ] Improving filter
 * [ ] Publishing extension
 * [ ] Providing instruction for installing missing dependencies
+* [ ] Writing test
