@@ -1,0 +1,9 @@
+.*/**
+out/test/**
+src/**
+.*
+*.lock
+*lock.json
+ts*.json
+**/*.ts
+vsc-extension-quickstart.md

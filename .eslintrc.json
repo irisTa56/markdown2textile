@@ -1,0 +1,19 @@
+{
+  "plugins": [
+    "@typescript-eslint",
+    "@typescript-eslint/tslint"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "@typescript-eslint/tslint/config": [
+      "error",
+      {
+        "lintFile": "./tslint.json"
+      }
+    ]
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  }
+}
