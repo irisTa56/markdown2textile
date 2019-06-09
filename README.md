@@ -8,7 +8,7 @@ __CAUTION: This extension is under development!__
 
 1. Select text in Markdown file.
 2. Open context menu.
-3. Select _Copy as Textile_.
+3. Click _Copy as Textile_.
 4. Converted text will be copied to your clipboard!
 
 ## Requirements
@@ -23,13 +23,26 @@ __CAUTION: This extension is under development!__
 
 :thinking:
 
+## Install Development Version
+
+Generate `*.vsix` file.
+
+```bash
+git clone https://github.com/irisTa56/markdown2textile.git
+cd markdown2textile
+npm install -g vsce
+vsce package
+```
+
+Then run the VS Code command `Extensions: Install from VSIX...`, and select the generated file.
+
 ## Release Notes
 
 Not yet released...
 
 ## TODO
 
-* [ ] [Bundling extension](https://code.visualstudio.com/api/working-with-extensions/bundling-extension)
+* [x] [Bundling extension](https://code.visualstudio.com/api/working-with-extensions/bundling-extension)
 * [ ] Improving filter
 * [ ] Publishing extension
 * [ ] Providing instruction for installing missing dependencies

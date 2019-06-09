@@ -6,8 +6,6 @@ export function activate(context: vscode.ExtensionContext) {
   console.info(`[${constants.name}] v${constants.version} activated!`);
 
 	const python = PythonRunner.getInstance(context);
-	python.checkPythonVersion();
-	python.checkPythonModules();
 
 	let disposable = vscode.commands.registerTextEditorCommand(
 		'extension.convert', (editor: vscode.TextEditor) => {

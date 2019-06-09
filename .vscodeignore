@@ -1,9 +1,12 @@
 .*/**
-out/test/**
+out/**
 src/**
+node_modules/**
 .*
+*.log
 *.lock
 *lock.json
 ts*.json
 **/*.ts
+webpack.config.js
 vsc-extension-quickstart.md

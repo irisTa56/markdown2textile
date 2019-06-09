@@ -11,6 +11,8 @@ export class PythonRunner {
   private constructor(context: vscode.ExtensionContext) {
     this.pythonPath = this.getPyConfiguration('pythonPath');
     this.scriptsDir = context.asAbsolutePath('scripts');
+    this.runPython('check_version.py');
+    this.runPython('check_modules.py');
     // replace shebang of scripts/pandoc_filter.py to the current Python
     const options: ReplaceInFileConfig = {
       files: path.join(this.scriptsDir, 'pandoc_filter.py'),
@@ -27,14 +29,6 @@ export class PythonRunner {
       PythonRunner.instance = new PythonRunner(context);
     }
     return PythonRunner.instance;
-  }
-
-  public checkPythonVersion(): void {
-    this.runPython('check_version.py');
-  }
-
-  public checkPythonModules(): void {
-    this.runPython('check_modules.py');
   }
 
   public convertText(text: string): void {
