@@ -8,19 +8,19 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const python = PythonRunner.getInstance(context);
 
-	let convert = vscode.commands.registerTextEditorCommand(
-		"extension.convertText", (editor: vscode.TextEditor) => {
+	const convert = vscode.commands.registerTextEditorCommand(
+		"md2tt.convertText", (editor: vscode.TextEditor) => {
 			python.convertText(editor.document.getText(editor.selection));
 		});
 
 	context.subscriptions.push(convert);
 
-	let select = vscode.commands.registerTextEditorCommand(
-		"extension.selectPythonInterpreter", () => {
+	const select = vscode.commands.registerTextEditorCommand(
+		"md2tt.selectPythonInterpreter", () => {
 			python.selectPythonInterpreter();
 		});
 
-		context.subscriptions.push(select);
+	context.subscriptions.push(select);
 }
 
 export function deactivate() {}
