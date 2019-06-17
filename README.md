@@ -11,17 +11,23 @@ __CAUTION: This extension is under development!__
 3. Click _Copy as Textile_.
 4. Converted text will be copied to your clipboard!
 
+## VS Code Marketplace
+
+[Markdown2Textile - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=irisTa56.markdown2textile)
+
 ## Requirements
 
-* [`Python`](https://www.python.org/) (must be version 3)
+* [`Python`](https://www.python.org/) (must be version 3.6 or higher)
 * [`Pandoc`](https://github.com/jgm/pandoc)
 * [`pandocfilters`](https://github.com/jgm/pandocfilters)
 * [`pypandoc`](https://github.com/bebraw/pypandoc)
 * [`pyperclip`](https://github.com/asweigart/pyperclip)
 
+You can install these dependencies interactively in VS Code after activating this extension (if some dependencies are missing).
+
 ## Extension Settings
 
-:thinking:
+None (so far).
 
 ## Install Development Version
 
@@ -38,14 +44,13 @@ Then run the VS Code command `Extensions: Install from VSIX...`, and select the 
 
 ## Release Notes
 
-Not yet released...
+* v0.0.1: first release.
 
 ## TODO
 
 * [x] [Bundling extension](https://code.visualstudio.com/api/working-with-extensions/bundling-extension)
 * [ ] Improving filter
-* [ ] Publishing extension
-* [ ] Providing instruction for installing missing dependencies
+* [x] Publishing extension
+* [x] Providing instruction for installing missing dependencies
 * [ ] Writing test
 * [ ] Using [`panflute`](https://github.com/sergiocorreia/panflute) instead of `pandocfilters`.
-* [ ] Getting Python version from [Python Extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python).
