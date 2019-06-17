@@ -37,6 +37,7 @@ Generate `*.vsix` file.
 git clone https://github.com/irisTa56/markdown2textile.git
 cd markdown2textile
 npm install -g vsce
+yarn install
 vsce package
 ```
 
