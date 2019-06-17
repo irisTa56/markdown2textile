@@ -47,3 +47,5 @@ Not yet released...
 * [ ] Publishing extension
 * [ ] Providing instruction for installing missing dependencies
 * [ ] Writing test
+* [ ] Using [`panflute`](https://github.com/sergiocorreia/panflute) instead of `pandocfilters`.
+* [ ] Getting Python version from [Python Extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python).

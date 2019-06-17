@@ -7,10 +7,7 @@ import pyperclip
 text = sys.stdin.read()
 
 output = pypandoc.convert_text(
-  text, 'textile', format='md',
-  filters=[os.path.join(os.path.dirname(__file__), 'pandoc_filter.py')])
+  text, "textile", format="md",
+  filters=[os.path.join(os.path.dirname(__file__), "pandoc_filter.py")])
 
 pyperclip.copy(output.strip())
-
-# notify VS Code extension that Python process has finished
-print('OK')

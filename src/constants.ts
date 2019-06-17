@@ -1,4 +1,4 @@
-import manifest from '../package.json';
+import manifest from "../package.json";
 
 export const constants = {
   name: manifest.name,
