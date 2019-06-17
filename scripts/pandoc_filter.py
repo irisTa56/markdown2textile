@@ -1,4 +1,4 @@
-#!/Users/takayuki/.pyenv/versions/3.7.3/bin/python
+#!/Users/takayuki/.pyenv/shims/python
 
 from pandocfilters import toJSONFilter, RawBlock
 

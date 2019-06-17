@@ -14,20 +14,7 @@ export class PythonRunner {
   private constructor(context: vscode.ExtensionContext) {
     this.scriptsDir = context.asAbsolutePath("scripts");
     this.pythonPath = PythonRunner.getPythonPath();
-    this.checkPythonVersion()
-      .then(() => { consoleInfo(`Python is ${this.pythonPath}`); })
-      .then(() => this.checkPythonModules())
-      .then(() => { consoleInfo(`Required Python modules are OK!`); })
-      .then(() => {
-        // replace shebang of scripts/pandoc_filter.py to the current Python
-        const options: ReplaceInFileConfig = {
-          files: path.join(this.scriptsDir, "pandoc_filter.py"),
-          from: new RegExp("^#!/.*", "i"),
-          to: `#!${this.pythonPath}`,
-        };
-        replaceInFile(options).catch(showError);
-      })
-      .then(undefined, showError);
+    this.afterSettingPython(this.checkPythonVersion());
   }
 
   public static getInstance(context: vscode.ExtensionContext): PythonRunner {
@@ -55,15 +42,41 @@ export class PythonRunner {
     });
   }
 
+  public convertText(text: string): void {
+    const pyshell = this.makePythonShell("markdown_to_textile.py");
+    PythonRunner.commWithPython(pyshell, text).then(undefined, showError);
+  }
+
+  public selectPythonInterpreter(): void {
+    const thenable = vscode.commands.executeCommand("python.setInterpreter")
+      .then(() => {
+        this.pythonPath = PythonRunner.getPythonPath();
+        return this.checkPythonVersion();
+      });
+    this.afterSettingPython(thenable);
+  }
+
+  private afterSettingPython(thenable: PyShellReturn) {
+    thenable
+      .then(() => { consoleInfo(`Python is ${this.pythonPath}`); })
+      .then(() => this.checkPythonModules())
+      .then(() => { consoleInfo(`Required Python modules are OK!`); })
+      .then(() => {
+        // replace shebang of scripts/pandoc_filter.py to the current Python
+        const options: ReplaceInFileConfig = {
+          files: path.join(this.scriptsDir, "pandoc_filter.py"),
+          from: new RegExp("^#!/.*", "i"),
+          to: `#!${this.pythonPath}`,
+        };
+        replaceInFile(options).catch(showError);
+      })
+      .then(undefined, showError);
+  }
+
   private makePythonShell(script: string, option?: object): PythonShell {
     return new PythonShell(
       path.join(this.scriptsDir, script),
       option || { pythonPath: this.pythonPath });
-  }
-
-  public convertText(text: string): void {
-    const pyshell = this.makePythonShell("markdown_to_textile.py");
-    PythonRunner.commWithPython(pyshell, text).then(undefined, showError);
   }
 
   private checkPythonVersion(): PyShellReturn {
@@ -90,7 +103,7 @@ export class PythonRunner {
   }
 
   private selectCompatiblePython(message: string): PyShellReturn {
-    return vscode.window.showErrorMessage(message, "Select Python Interpreter")
+    return vscode.window.showWarningMessage(message, "Select Python Interpreter")
       .then((item: string | undefined) => {
         if (item === "Select Python Interpreter") {
           return vscode.commands.executeCommand("python.setInterpreter");
@@ -106,7 +119,7 @@ export class PythonRunner {
 
   // `message` is comma-separated missing dependency names
   private installPythonModules(message: string): PyShellReturn {
-    return vscode.window.showErrorMessage(
+    return vscode.window.showWarningMessage(
       `Missing Python modules: ${message}`, "Install Missing Dependencies")
       .then((item: string | undefined) => {
         if (item === "Install Missing Dependencies") {

@@ -22,15 +22,19 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.convert",
-				"title": "Copy as Textile"
+				"command": "extension.convertText",
+				"title": "Markdown2Textile: Copy as Textile"
+			},
+			{
+				"command": "extension.selectPythonInterpreter",
+				"title": "Markdown2Textile: Select Python Interpreter"
 			}
 		],
 		"menus": {
 			"editor/context": [
 				{
 					"when": "editorHasSelection && editorLangId == markdown",
-					"command": "extension.convert",
+					"command": "extension.convertText",
 					"group": "9_cutcopypaste@100"
 				}
 			]

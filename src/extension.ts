@@ -8,12 +8,19 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const python = PythonRunner.getInstance(context);
 
-	let disposable = vscode.commands.registerTextEditorCommand(
-		"extension.convert", (editor: vscode.TextEditor) => {
+	let convert = vscode.commands.registerTextEditorCommand(
+		"extension.convertText", (editor: vscode.TextEditor) => {
 			python.convertText(editor.document.getText(editor.selection));
 		});
 
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(convert);
+
+	let select = vscode.commands.registerTextEditorCommand(
+		"extension.selectPythonInterpreter", () => {
+			python.selectPythonInterpreter();
+		});
+
+		context.subscriptions.push(select);
 }
 
 export function deactivate() {}
