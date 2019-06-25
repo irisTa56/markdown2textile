@@ -8,6 +8,6 @@ text = sys.stdin.read()
 
 output = pypandoc.convert_text(
   text, "textile", format="md",
-  filters=[os.path.join(os.path.dirname(__file__), "pandoc_filter.py")])
+  filters=[os.path.join(os.path.dirname(__file__), "pandoc_filter.py")])[:-1]
 
-pyperclip.copy(output.strip())
+pyperclip.copy(output)

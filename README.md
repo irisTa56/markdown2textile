@@ -19,7 +19,7 @@ __CAUTION: This extension is under development!__
 
 * [`Python`](https://www.python.org/) (must be version 3.6 or higher)
 * [`Pandoc`](https://github.com/jgm/pandoc)
-* [`pandocfilters`](https://github.com/jgm/pandocfilters)
+* [`panflute`](https://github.com/sergiocorreia/panflute)
 * [`pypandoc`](https://github.com/bebraw/pypandoc)
 * [`pyperclip`](https://github.com/asweigart/pyperclip)
 
@@ -54,4 +54,4 @@ Then run the VS Code command `Extensions: Install from VSIX...`, and select the 
 * [x] Publishing extension
 * [x] Providing instruction for installing missing dependencies
 * [ ] Writing test
-* [ ] Using [`panflute`](https://github.com/sergiocorreia/panflute) instead of `pandocfilters`.
+* [x] Using `panflute` instead of `pandocfilters`.

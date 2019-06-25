@@ -1,14 +1,17 @@
 #!/Users/takayuki/.pyenv/shims/python
 
-from pandocfilters import toJSONFilter, RawBlock
+import panflute as pf
 
-def code(key, value, format, meta):
-  if key == "CodeBlock":
-    ((_, lang, _), code) = value
-    syntax = 'class="{}"'.format(lang[0] if len(lang) else "text")
-    return RawBlock(
-      "html",
-      "\n".join(["<pre><code {}>".format(syntax), code, "</code></pre>\n"]))
+def code(elem, _doc):
+  if isinstance(elem, pf.CodeBlock):
+    languages = elem.classes
+    syntax = 'class="{}"'.format(languages[0] if languages else "text")
+    body = "\n".join([
+      "<pre><code {}>".format(syntax),
+      elem.text,
+      "</code></pre>\n",
+    ])
+    return pf.RawBlock(body, format="html")
 
 if __name__ == "__main__":
-  toJSONFilter(code)
+  pf.toJSONFilter(code)

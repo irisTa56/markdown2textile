@@ -1,9 +1,9 @@
 missing_dependencies = []
 
 try:
-  import pandocfilters
+  import panflute
 except ModuleNotFoundError:
-  missing_dependencies.append("pandocfilters")
+  missing_dependencies.append("panflute")
 
 try:
   import pypandoc
