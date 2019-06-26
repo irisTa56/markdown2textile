@@ -3,7 +3,7 @@
 	"displayName": "Markdown2Textile",
 	"description": "VS Code extension to convert Markdown to Textile",
 	"license": "MIT",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "irisTa56",
 	"repository": {
 		"type": "git",

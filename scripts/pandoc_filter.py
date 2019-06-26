@@ -1,9 +1,12 @@
 #!/Users/takayuki/.pyenv/shims/python
 
-import panflute as pf
+from panflute import (
+  BlockQuote, CodeBlock, HorizontalRule, Inline, LineBreak, Para,
+  RawBlock, RawInline, SoftBreak, Space, Str, run_filters
+)
 
-def code(elem, _doc):
-  if isinstance(elem, pf.CodeBlock):
+def code_block(elem, _doc):
+  if isinstance(elem, CodeBlock):
     languages = elem.classes
     syntax = 'class="{}"'.format(languages[0] if languages else "text")
     body = "\n".join([
@@ -11,7 +14,37 @@ def code(elem, _doc):
       elem.text,
       "</code></pre>\n",
     ])
-    return pf.RawBlock(body, format="html")
+    return RawBlock(body)
+
+def horizontal_rule(elem, _doc):
+  if isinstance(elem, HorizontalRule):
+    return RawBlock("---\n")
+
+def stripped_quote(elem, _doc):
+  if isinstance(elem, BlockQuote):
+    child_elems = [Str(">"), Space()]
+    after_paragraph = False
+    def append(child, _doc):
+      nonlocal child_elems
+      nonlocal after_paragraph
+      if isinstance(child, Inline):
+        if after_paragraph:
+          child_elems += [SoftBreak(), Str(">")] * 2 + [Space()]
+        child_elems.append(child)
+        if isinstance(child, SoftBreak):
+          child_elems += [Str(">"), Space()]
+      after_paragraph = isinstance(child, Para)
+    elem.walk(append)
+    return Para(*child_elems)
+
+def line_break(elem, _doc):
+  if isinstance(elem, SoftBreak):
+    return LineBreak()
+
+def raw_string(elem, _doc):
+  if isinstance(elem, Str):
+    return RawInline(elem.text)
 
 if __name__ == "__main__":
-  pf.toJSONFilter(code)
+  run_filters([
+    code_block, horizontal_rule, stripped_quote, line_break, raw_string])

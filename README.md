@@ -46,6 +46,7 @@ Then run the VS Code command `Extensions: Install from VSIX...`, and select the 
 ## Release Notes
 
 * v0.0.1: first release.
+* v0.0.2: improve Pandoc filter.
 
 ## TODO
 
@@ -55,3 +56,4 @@ Then run the VS Code command `Extensions: Install from VSIX...`, and select the 
 * [x] Providing instruction for installing missing dependencies
 * [ ] Writing test
 * [x] Using `panflute` instead of `pandocfilters`.
+* [ ] Enabling to select hard/soft line break.
