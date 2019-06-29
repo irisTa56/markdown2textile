@@ -12,6 +12,8 @@ My name is Pen.
 
 [Link to panflute](http://scorreia.com/software/panflute/index.html)
 
+https://elixir-lang.org
+
 ## Your Text
 
 Run the bellow code with `--option`:
@@ -33,8 +35,6 @@ print("Hello, world")
 
 * **Bold** and __Bold__
 - *Italic* and _Italic_
-
-1. &<>"*_@+-|
 """
 
 text_tt = """\
@@ -44,6 +44,8 @@ This is a pen.
 My name is Pen.
 
 "Link to panflute":http://scorreia.com/software/panflute/index.html
+
+https://elixir-lang.org
 
 h2(#your-text). Your Text
 
@@ -58,16 +60,14 @@ print("Hello, world")
 > 2019/06/23
 
 > 2019/06/23
-> 2019-06-23
+> 2019&#45;06&#45;23
 
 > 2019/06/23
 >
-> 2019-06-23
+> 2019&#45;06&#45;23
 
 * *Bold* and *Bold*
 * _Italic_ and _Italic_
-
-# &<>"*_@+-|
 """
 
 filter_path = os.path.join(os.path.dirname(__file__), "../pandoc_filter.py")
