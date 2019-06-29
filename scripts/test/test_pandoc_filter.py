@@ -12,6 +12,11 @@ My name is Pen.
 
 [Link to panflute](http://scorreia.com/software/panflute/index.html)
 
+<<<<<<< HEAD
+https://elixir-lang.org
+
+=======
+>>>>>>> master
 ## Your Text
 
 Run the bellow code with `--option`:
@@ -33,8 +38,11 @@ print("Hello, world")
 
 * **Bold** and __Bold__
 - *Italic* and _Italic_
+<<<<<<< HEAD
+=======
 
 1. &<>"*_@+-|
+>>>>>>> master
 """
 
 text_tt = """\
@@ -45,6 +53,11 @@ My name is Pen.
 
 "Link to panflute":http://scorreia.com/software/panflute/index.html
 
+<<<<<<< HEAD
+https://elixir-lang.org
+
+=======
+>>>>>>> master
 h2(#your-text). Your Text
 
 Run the bellow code with @--option@:
@@ -58,11 +71,11 @@ print("Hello, world")
 > 2019/06/23
 
 > 2019/06/23
-> 2019-06-23
+> 2019&#45;06&#45;23
 
 > 2019/06/23
 >
-> 2019-06-23
+> 2019&#45;06&#45;23
 
 * *Bold* and *Bold*
 * _Italic_ and _Italic_
