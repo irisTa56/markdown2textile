@@ -1,8 +1,10 @@
-import { PythonShell } from "python-shell";
-import replaceInFile, { ReplaceInFileConfig } from "replace-in-file";
-import * as path from "path";
 import * as vscode from "vscode";
+import replaceInFile, { ReplaceInFileConfig } from "replace-in-file";
+import { PythonShell } from "python-shell";
 import { consoleInfo, showError } from "./utility";
+
+const fs = require("fs");
+const path = require("path");
 
 type PyShellReturn = Thenable<string | Error | undefined>;
 
@@ -14,7 +16,7 @@ export class PythonRunner {
   private constructor(context: vscode.ExtensionContext) {
     this.scriptsDir = context.asAbsolutePath("scripts");
     this.pythonPath = PythonRunner.getPythonPath();
-    this.afterSettingPython(this.checkPythonVersion());
+    this.afterSettingPython();
   }
 
   public static getInstance(context: vscode.ExtensionContext): PythonRunner {
@@ -25,13 +27,12 @@ export class PythonRunner {
   }
 
   private static getPythonPath(): string {
-    const pyConfiguration = vscode.workspace.getConfiguration("python", null);
+    const config = vscode.workspace.getConfiguration("markdown2textile");
     // fallback to System Python
-    return pyConfiguration.get<string>("pythonPath", "/usr/bin/python");
+    return config.get<string>("pythonPathToUsePandoc", "/usr/bin/python3");
   }
 
-  private static commWithPython(
-      pyshell: PythonShell, textToPython?: string): PyShellReturn {
+  private static commWithPython(pyshell: PythonShell, textToPython?: string): PyShellReturn {
     return new Promise((resolve, reject) => {
       if (typeof textToPython === "string") { pyshell.send(textToPython); }
       pyshell.on("message", (message: string) => { reject(message); });
@@ -47,17 +48,13 @@ export class PythonRunner {
     PythonRunner.commWithPython(pyshell, text).then(undefined, showError);
   }
 
-  public selectPythonInterpreter(): void {
-    const thenable = vscode.commands.executeCommand("python.setInterpreter")
-      .then(() => {
-        this.pythonPath = PythonRunner.getPythonPath();
-        return this.checkPythonVersion();
-      });
-    this.afterSettingPython(thenable);
+  public updatePythonPath(): void {
+    this.pythonPath = PythonRunner.getPythonPath();
+    this.afterSettingPython();
   }
 
-  private afterSettingPython(thenable: PyShellReturn) {
-    thenable
+  private afterSettingPython() {
+    this.checkPython()
       .then(() => { consoleInfo(`Python is ${this.pythonPath}`); })
       .then(() => this.checkPythonModules())
       .then(() => { consoleInfo(`Required Python modules are OK!`); })
@@ -65,7 +62,7 @@ export class PythonRunner {
         // replace shebang of scripts/pandoc_filter.py to the current Python
         const options: ReplaceInFileConfig = {
           files: path.join(this.scriptsDir, "pandoc_filter.py"),
-          from: new RegExp("^#!/.*", "i"),
+          from: new RegExp("^#!/.*"),
           to: `#!${this.pythonPath}`,
         };
         replaceInFile(options).catch(showError);
@@ -73,23 +70,29 @@ export class PythonRunner {
       .then(undefined, showError);
   }
 
-  private makePythonShell(script: string, option?: object): PythonShell {
+  private makePythonShell(script: string, option: object = {}): PythonShell {
     return new PythonShell(
       path.join(this.scriptsDir, script),
-      option || { pythonPath: this.pythonPath });
+      Object.assign(option, { pythonPath: this.pythonPath }));
   }
 
-  private checkPythonVersion(): PyShellReturn {
-    return this.checkPython(
-      "check_version.py", this.selectCompatiblePython.bind(this));
+  private checkPython(): PyShellReturn {
+    return fs.promises.access(this.pythonPath)
+      .then(() => {
+        return this.checkUsingPython(
+          "check_version.py", this.openSettingsJson.bind(this));
+      })
+      .then(undefined, () => {
+        return this.openSettingsJson("Python does not exist");
+      });
   }
 
   private checkPythonModules(): PyShellReturn {
-    return this.checkPython(
+    return this.checkUsingPython(
       "check_modules.py", this.installPythonModules.bind(this));
   }
 
-  private checkPython(script: string, solver: (_: string) => PyShellReturn) {
+  private checkUsingPython(script: string, solver: (_: string) => PyShellReturn) {
     const pyshell = this.makePythonShell(script);
     return PythonRunner.commWithPython(pyshell)
       .then(undefined, (messageOrError: string | Error) => {
@@ -102,18 +105,16 @@ export class PythonRunner {
       });
   }
 
-  private selectCompatiblePython(message: string): PyShellReturn {
-    return vscode.window.showWarningMessage(message, "Select Python Interpreter")
+  private openSettingsJson(message: string): PyShellReturn {
+    return vscode.window.showWarningMessage(
+      "You need to set Python to use Pandoc", "Open settings.json")
       .then((item: string | undefined) => {
-        if (item === "Select Python Interpreter") {
-          return vscode.commands.executeCommand("python.setInterpreter");
-        } else {
-          throw new Error("Failed to change incompatible Python");
+        if (item === "Open settings.json") {
+          vscode.commands.executeCommand("workbench.action.openSettingsJson");
+          // throw an empty error to skip following checks
+          throw new Error();
         }
-      })
-      .then(() => {
-        this.pythonPath = PythonRunner.getPythonPath();
-        return this.checkPythonVersion();
+        throw new Error(message);
       });
   }
 
@@ -123,18 +124,19 @@ export class PythonRunner {
       `Missing Python modules: ${message}`, "Install Missing Dependencies")
       .then((item: string | undefined) => {
         if (item === "Install Missing Dependencies") {
-          const pyshell = this.makePythonShell("install_via_pip.py", {
-            pythonPath: this.pythonPath,
-            args: message.split(", "),
-          });
-          return PythonRunner.commWithPython(pyshell);
+          return this.installPythonModulesImpl(message.split(", "));
         } else {
-          throw new Error("Failed to install missing Python modules");
+          throw new Error("You did not install missing Python modules");
         }
       })
       .then(() => {
         // re-try to check Pandoc with pypandoc
         return this.checkPythonModules();
       });
+  }
+
+  private installPythonModulesImpl(args: string[]): PyShellReturn {
+    const pyshell = this.makePythonShell("install_via_pip.py", { args: args });
+    return PythonRunner.commWithPython(pyshell);
   }
 }

@@ -3,7 +3,7 @@
 	"displayName": "Markdown2Textile",
 	"description": "VS Code extension to convert Markdown to Textile",
 	"license": "MIT",
-	"version": "0.0.3",
+	"version": "0.1.0",
 	"publisher": "irisTa56",
 	"repository": {
 		"type": "git",
@@ -22,19 +22,25 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "md2tt.convertText",
+				"command": "markdown2textile.convertText",
 				"title": "Markdown2Textile: Copy as Textile"
-			},
-			{
-				"command": "md2tt.selectPythonInterpreter",
-				"title": "Markdown2Textile: Select Python Interpreter"
 			}
 		],
+    "configuration": {
+			"title": "Markdown2Textile",
+			"properties": {
+				"markdown2textile.pythonPathToUsePandoc": {
+					"type": "string",
+					"default": "/usr/bin/python3",
+					"description": "Path to Python (must be version 3) to use Pandoc."
+				}
+			}
+		},
 		"menus": {
 			"editor/context": [
 				{
 					"when": "editorHasSelection && editorLangId == markdown",
-					"command": "md2tt.convertText",
+					"command": "markdown2textile.convertText",
 					"group": "9_cutcopypaste@100"
 				}
 			]
@@ -51,9 +57,6 @@
 		"postinstall": "node ./node_modules/vscode/bin/install",
 		"eslint": "eslint -c .eslintrc.json 'src/**/*.ts'"
 	},
-	"extensionDependencies": [
-		"ms-python.python"
-	],
 	"devDependencies": {
 		"@types/mocha": "^2.2.42",
 		"@types/node": "^10.12.21",

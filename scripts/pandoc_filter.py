@@ -1,4 +1,4 @@
-#!/Users/takayuki/.pyenv/shims/python
+#!/Users/takayuki/.asdf/shims/python
 
 from panflute import (
   BlockQuote, CodeBlock, HorizontalRule, Inline, LineBreak, Para,

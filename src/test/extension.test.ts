@@ -13,8 +13,7 @@ import * as vscode from "vscode";
 
 const EXTENSION_ID = "irisTa56.markdown2textile";
 const EXTENSION_COMMANDS = [
-  "md2tt.convertText",
-  "md2tt.selectPythonInterpreter",
+  "markdown2textile.convertText",
 ];
 
 const activateExtension = (): Thenable<undefined> => {
@@ -37,11 +36,11 @@ suite("Markdown2Textile: Extension Tests", () => {
     assert.ok(vscode.extensions.getExtension(EXTENSION_ID));
   });
 
-  test("should be able to register md2tt commands", () => {
+  test("should be able to register markdown2textile commands", () => {
     activateExtension().then(() => {
       vscode.commands.getCommands(true).then((commands) => {
         const foundCommands = commands.filter((value) =>
-          EXTENSION_COMMANDS.indexOf(value) >= 0 || value.startsWith("md2tt.")
+          EXTENSION_COMMANDS.indexOf(value) >= 0 || value.startsWith("markdown2textile.")
         );
         assert.equal(foundCommands.length, EXTENSION_COMMANDS.length);
       });
