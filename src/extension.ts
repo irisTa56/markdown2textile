@@ -8,19 +8,17 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const python = PythonRunner.getInstance(context);
 
-	const convert = vscode.commands.registerTextEditorCommand(
-		"md2tt.convertText", (editor: vscode.TextEditor) => {
+	context.subscriptions.push(vscode.commands.registerTextEditorCommand(
+		"markdown2textile.convertText", (editor: vscode.TextEditor) => {
 			python.convertText(editor.document.getText(editor.selection));
-		});
+		}));
 
-	context.subscriptions.push(convert);
-
-	const select = vscode.commands.registerTextEditorCommand(
-		"md2tt.selectPythonInterpreter", () => {
-			python.selectPythonInterpreter();
-		});
-
-	context.subscriptions.push(select);
+	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(
+		(event: vscode.ConfigurationChangeEvent) => {
+			if (event.affectsConfiguration("markdown2textile.pythonPathToUsePandoc")) {
+				python.updatePythonPath();
+			}
+		}));
 }
 
 export function deactivate() {}

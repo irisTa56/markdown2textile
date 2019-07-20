@@ -9,6 +9,8 @@ export function showError(messageOrError: string | Error): void {
   if (typeof messageOrError === "string") {
     vscode.window.showErrorMessage(messageOrError);
   } else {
-    vscode.window.showErrorMessage(messageOrError.message);
+    if (messageOrError.message) {
+      vscode.window.showErrorMessage(messageOrError.message);
+    }
   }
 }

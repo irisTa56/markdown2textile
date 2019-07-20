@@ -2,8 +2,6 @@
 
 VS Code extension to convert selected Markdown text into RedMine-style Textile.
 
-__CAUTION: This extension is under development!__
-
 ## Usage
 
 1. Select text in Markdown file.
@@ -27,7 +25,15 @@ You can install these dependencies interactively in VS Code after activating thi
 
 ## Extension Settings
 
-None (so far).
+```json
+{
+  "markdown2textile.pythonPathToUsePandoc": {
+    "type": "string",
+    "default": "/usr/bin/python3",
+    "description": "Path to Python (must be version 3) to use Pandoc."
+  }
+}
+```
 
 ## Install Development Version
 
@@ -48,6 +54,7 @@ Then run the VS Code command `Extensions: Install from VSIX...`, and select the 
 * v0.0.1: first release.
 * v0.0.2: improve Pandoc filter.
 * v0.0.3: revert one of the changes done in v0.0.2; use raw string for only URI.
+* v0.1.0: become independent of vscode-python.
 
 ## TODO
 
