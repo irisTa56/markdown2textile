@@ -55,6 +55,7 @@ Then run the VS Code command `Extensions: Install from VSIX...`, and select the 
 * v0.0.2: improve Pandoc filter.
 * v0.0.3: revert one of the changes done in v0.0.2; use raw string for only URI.
 * v0.1.0: become independent of vscode-python.
+* v0.1.1: security update.
 
 ## TODO
 
