@@ -16,6 +16,7 @@ VS Code extension to convert selected Markdown text into RedMine-style Textile.
 ## Requirements
 
 * [`Python`](https://www.python.org/) (must be version 3.6 or higher)
+    * Please ensure `python` in your `PATH` is version 3.
 * [`Pandoc`](https://github.com/jgm/pandoc)
 * [`panflute`](https://github.com/sergiocorreia/panflute)
 * [`pypandoc`](https://github.com/bebraw/pypandoc)
@@ -57,6 +58,7 @@ Then run the VS Code command `Extensions: Install from VSIX...`, and select the 
 * v0.1.0: become independent of vscode-python.
 * v0.1.1: security update.
 * v0.1.2: security update.
+* v0.1.3: security update .
 
 ## TODO
 

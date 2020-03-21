@@ -1,4 +1,4 @@
-#!/Users/takayuki/.asdf/shims/python
+#!/usr/bin/env python3
 
 from panflute import (
   BlockQuote, CodeBlock, HorizontalRule, Inline, LineBreak, Para,
@@ -50,4 +50,9 @@ def raw_string(elem, _doc):
 
 if __name__ == "__main__":
   run_filters([
-    code_block, horizontal_rule, stripped_quote, line_break, raw_string])
+    code_block,
+    horizontal_rule,
+    stripped_quote,
+    line_break,
+    raw_string,
+  ])

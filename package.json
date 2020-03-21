@@ -3,14 +3,14 @@
 	"displayName": "Markdown2Textile",
 	"description": "VS Code extension to convert Markdown to Textile",
 	"license": "MIT",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"publisher": "irisTa56",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/irisTa56/markdown2textile.git"
 	},
 	"engines": {
-		"vscode": "^1.35.0"
+		"vscode": "^1.43.0"
 	},
 	"categories": [
 		"Other"
@@ -58,8 +58,8 @@
 		"eslint": "eslint -c .eslintrc.json 'src/**/*.ts'"
 	},
 	"devDependencies": {
-		"@types/mocha": "^5.2.7",
-		"@types/node": "^12.7.5",
+		"@types/mocha": "^7.0.2",
+		"@types/node": "^13.9.2",
 		"@typescript-eslint/eslint-plugin": "^2.3.0",
 		"@typescript-eslint/eslint-plugin-tslint": "^2.3.0",
 		"@typescript-eslint/parser": "^2.3.0",
@@ -73,6 +73,6 @@
 	},
 	"dependencies": {
 		"python-shell": "^1.0.8",
-		"replace-in-file": "^4.1.3"
+		"replace-in-file": "^5.0.2"
 	}
 }
