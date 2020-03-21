@@ -58,7 +58,8 @@ Then run the VS Code command `Extensions: Install from VSIX...`, and select the 
 * v0.1.0: become independent of vscode-python.
 * v0.1.1: security update.
 * v0.1.2: security update.
-* v0.1.3: security update .
+* v0.1.3: security update.
+* v0.1.4: be compatible with Python 3.6.
 
 ## TODO
 
