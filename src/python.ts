@@ -1,12 +1,12 @@
 import * as vscode from "vscode";
-import replaceInFile, { ReplaceInFileConfig } from "replace-in-file";
 import { PythonShell } from "python-shell";
 import { consoleInfo, showError } from "./utility";
 
 const fs = require("fs");
 const path = require("path");
+const replace = require('replace-in-file');
 
-type PyShellReturn = Thenable<string | Error | undefined>;
+type PyShellReturn = Thenable<string | Error | void>;
 
 export class PythonRunner {
   private scriptsDir: string;
@@ -60,12 +60,11 @@ export class PythonRunner {
       .then(() => { consoleInfo(`Required Python modules are OK!`); })
       .then(() => {
         // replace shebang of scripts/pandoc_filter.py to the current Python
-        const options: ReplaceInFileConfig = {
+        replace({
           files: path.join(this.scriptsDir, "pandoc_filter.py"),
           from: new RegExp("^#!/.*"),
           to: `#!${this.pythonPath}`,
-        };
-        replaceInFile(options).catch(showError);
+        }).catch(showError);
       })
       .then(undefined, showError);
   }

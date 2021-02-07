@@ -52,14 +52,15 @@ Then run the VS Code command `Extensions: Install from VSIX...`, and select the 
 
 ## Release Notes
 
-* v0.0.1: first release.
-* v0.0.2: improve Pandoc filter.
-* v0.0.3: revert one of the changes done in v0.0.2; use raw string for only URI.
-* v0.1.0: become independent of vscode-python.
-* v0.1.1: security update.
-* v0.1.2: security update.
-* v0.1.3: security update.
-* v0.1.4: be compatible with Python 3.6.
+* v0.0.1: first release
+* v0.0.2: improve Pandoc filter
+* v0.0.3: revert one of the changes done in v0.0.2; use raw string for only URI
+* v0.1.0: become independent of vscode-python
+* v0.1.1: security update
+* v0.1.2: security update
+* v0.1.3: security update
+* v0.1.4: be compatible with Python 3.6
+* v0.1.5: update dependencies
 
 ## TODO
 
@@ -68,5 +69,5 @@ Then run the VS Code command `Extensions: Install from VSIX...`, and select the 
 * [x] Publishing extension
 * [x] Providing instruction for installing missing dependencies
 * [ ] Writing test
-* [x] Using `panflute` instead of `pandocfilters`.
-* [ ] Enabling to select hard/soft line break.
+* [x] Using `panflute` instead of `pandocfilters`
+* [ ] Enabling to select hard/soft line break

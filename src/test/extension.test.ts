@@ -16,7 +16,7 @@ const EXTENSION_COMMANDS = [
   "markdown2textile.convertText",
 ];
 
-const activateExtension = (): Thenable<undefined> => {
+const activateExtension = (): Thenable<void> => {
   return new Promise((resolve, reject) => {
     const extension = vscode.extensions.getExtension(EXTENSION_ID);
     if (typeof extension === "undefined") { reject(); }
